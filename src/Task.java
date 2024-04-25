@@ -1,12 +1,12 @@
 public class Task {
     protected String name;
     protected String description;
-    protected String status;
+    protected TaskStatus status;
 
     public Task(String name, String description, String status) {
         this.name = name;
         this.description = description;
-        this.status = status;
+        this.status = TaskStatus.NEW;
     }
 }
 
