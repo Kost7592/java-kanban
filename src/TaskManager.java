@@ -4,18 +4,24 @@ import java.util.HashMap;
 public class TaskManager {
 
     private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Subtask> subTasks = new HashMap<>();
+    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final Integer id = 0;
 
 
-    public void createTask(Task task, HashMap tasks) {
-
-        tasks.put(id,task);
+    public void removeTaskById () {
+        tasks.remove(id);
     }
-    public void createSubTask(Task subTask, HashMap subTasks) {
+    public void removeAllTasks() {
+        tasks.clear();
+    }
+    public void removeEpicById() {
+        epics.remove(id);
+    }
 
-        subTasks.put(id,subTask);
+    public void createSubTask(Task subTask, HashMap subtasks) {
+
+        subtasks.put(id,subTask);
     }
     public void createEpic(Epic epic, HashMap epics) {
 
@@ -26,8 +32,8 @@ public class TaskManager {
         return tasks;
     }
 
-    public HashMap<Integer, Subtask> getSubTasks() {
-        return subTasks;
+    public HashMap<Integer, Subtask> getsubtasks() {
+        return subtasks;
     }
 
     public HashMap<Integer, Epic> getEpics() {

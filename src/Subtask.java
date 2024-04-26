@@ -2,9 +2,28 @@ public class Subtask extends Task{
 
     protected Integer epicId;
 
-    public Subtask(String name, String description, String status, Integer epicId) {
-        super(name, description, status);
+    public Subtask(String name, String description, Integer epicId) {
+        super(name, description);
         this.epicId = epicId;
+    }
+
+    public Integer getEpicId() {
+        return epicId;
+    }
+
+    public void setEpicId(Integer epicId) {
+        this.epicId = epicId;
+    }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "epicId=" + epicId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", id=" + id +
+                '}';
     }
 }
 
