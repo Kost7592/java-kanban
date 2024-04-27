@@ -4,6 +4,8 @@ import java.util.HashMap;
 public class Epic extends Task{
 
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    private TaskStatus taskStatus;
+
     public Epic(String name, String description) {
         super(name, description);
     }
@@ -40,11 +42,12 @@ public class Epic extends Task{
                 '}';
     }
 
-    @Override
+
     public void setTaskStatus (TaskStatus taskStatus){
 
+        this.taskStatus = taskStatus;
     }
-    public void UpdateStatus() {
+    public void updateStatus() {
         int countOfDone = 0;
         int countOfNew = 0;
 
