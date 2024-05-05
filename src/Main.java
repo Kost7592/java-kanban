@@ -56,6 +56,6 @@ public class Main {
     private static void printAllTasks() {
         System.out.println("Список задач: " + taskManager.getTasks());
         System.out.println("Список эпиков: " + taskManager.getEpics());
-        System.out.println("Список подзадач: " + taskManager.getsubtasks());
+        System.out.println("Список подзадач: " + taskManager.getSubtasks());
     }
 }
