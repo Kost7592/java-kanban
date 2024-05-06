@@ -51,7 +51,7 @@ public class TaskManager {
 
     public void removeEpicById(Integer id) {
         if(epics.containsKey(id)) {
-            for (Subtask subtask: getEpicSubtasks(epics.get(id))) {
+            for (Subtask subtask: getEpicSubtasks(id)) {
                 subtasks.remove(subtask.getId());
             }
         }
@@ -138,13 +138,11 @@ public class TaskManager {
         }
     }
 
-    public ArrayList<Subtask> getEpicSubtasks(Epic epic) {
-        if(epics.containsKey(epic.getId())) {
+    public ArrayList<Subtask> getEpicSubtasks(Integer id) {
+        if(epics.containsKey(id)) {
             return getSubtasks();
         }
         return new ArrayList<>();
     }
 
 }
-
-
