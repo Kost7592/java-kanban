@@ -1,8 +1,10 @@
+package modules;
+
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
 
-    protected ArrayList<Integer> subtasksId = new ArrayList<>();
+    private ArrayList<Integer> subtasksId = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
@@ -18,7 +20,7 @@ public class Epic extends Task{
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "modules.Epic{" +
                 "subtasksId=" + subtasksId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
