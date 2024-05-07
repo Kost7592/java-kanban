@@ -20,7 +20,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "modules.Epic{" +
+        return "Epic{" +
                 "subtasksId=" + subtasksId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

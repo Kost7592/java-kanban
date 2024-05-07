@@ -64,7 +64,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "modules.Task{" +
+        return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +

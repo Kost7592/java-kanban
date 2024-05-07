@@ -30,14 +30,14 @@ public class Main {
         taskManager.createSubtask(subtask2Epic2);
         System.out.println("Заполнение задач");
         printAllTasks();
+
         task1.setStatus(TaskStatus.DONE); // обновление статусов
         taskManager.updateTask(task1);
         task2.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateTask(task2);
-
         subtask1Epic1.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateSubtask(subtask1Epic1);
-        subtask1Epic2.setStatus(TaskStatus.DONE);
+        subtask1Epic2.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateSubtask(subtask1Epic2);
         subtask2Epic1.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask2Epic1);

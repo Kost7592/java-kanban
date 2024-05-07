@@ -44,10 +44,6 @@ public class TaskManager {
         this.taskStatus = taskStatus;
     }
 
-    private Integer getNewId() {
-        return countOfId++;
-    }
-
     public void removeTaskById (Integer id) {
         tasks.remove(id);
     }
@@ -135,9 +131,8 @@ public class TaskManager {
 
     public void updateEpic(Epic newEpic) {
         if (epics.containsKey(newEpic.getId())) {
-            Epic epic = epics.get(newEpic.getId());
-            epic.setName(newEpic.getName());
-            epic.setDescription(newEpic.getDescription());
+            epics.put(newEpic.getId(),newEpic);
+            updateEpicStatus(newEpic.getId());
         }
     }
     public void updateEpicStatus(Integer id) {
@@ -159,5 +154,9 @@ public class TaskManager {
         } else {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
+    }
+
+    private Integer getNewId() {
+        return countOfId++;
     }
 }
