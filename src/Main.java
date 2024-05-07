@@ -23,7 +23,7 @@ public class Main {
         Subtask subtask2Epic2 = new Subtask("Подзадача 2","Вторая подзадача эпика 2", epic2.getId());
         taskManager.createSubtask(subtask2Epic2);
         System.out.println("Заполнение задач");
-
+        printAllTasks();
         task1.setStatus(TaskStatus.DONE); // обновление статусов
         taskManager.updateTask(task1);
         task2.setStatus(TaskStatus.IN_PROGRESS);
@@ -38,10 +38,10 @@ public class Main {
         subtask2Epic2.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask2Epic2);
         System.out.println("Обновление статусов");
-
+        printAllTasks();
         System.out.println("Начало Удаление задач");
         taskManager.removeTaskById(task1.getId()); // удаление по id
-        taskManager.removeSubtaskById(subtask1Epic1.getId());
+        taskManager.removeSubtaskById(subtask2Epic1.getId());
         taskManager.removeEpicById(epic2.getId());
         printAllTasks();
         System.out.println("Удаление задач");
