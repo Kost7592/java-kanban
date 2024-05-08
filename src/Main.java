@@ -53,10 +53,11 @@ public class Main {
         printAllTasks();
 
         taskManager.removeAllTasks();
-        taskManager.removeAllEpics();
         taskManager.removeAllSubtasks();
+        taskManager.removeAllEpics();
         System.out.println("Очищение всех списков");
         printAllTasks();
+
     }
     private static void printAllTasks() {
         System.out.println("Список задач: " + taskManager.getTasks());
