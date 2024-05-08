@@ -2,7 +2,7 @@ package modules;
 
 public class Subtask extends Task {
 
-    protected Integer epicId;
+    private Integer epicId;
 
     public Subtask(String name, String description, Integer epicId) {
         super(name, description);
