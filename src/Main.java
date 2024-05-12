@@ -2,10 +2,10 @@ import modules.Epic;
 import modules.Subtask;
 import modules.Task;
 import modules.TaskStatus;
-import utility.TaskManager;
+import utility.InMemoryTaskManager;
 
 public class Main {
-    static TaskManager taskManager = new TaskManager();
+    static InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
     public static void main(String[] args) {
         Task task1 = new Task("Задача 1", "Первая задача."); // заполнение задач
@@ -59,6 +59,7 @@ public class Main {
         printAllTasks();
 
     }
+
     private static void printAllTasks() {
         System.out.println("Список задач: " + taskManager.getTasks());
         System.out.println("Список эпиков: " + taskManager.getEpics());
