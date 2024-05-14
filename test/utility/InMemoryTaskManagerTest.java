@@ -8,16 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class InMemoryTaskManagerTest {
-    private InMemoryTaskManager manager;
+    private TaskManager manager;
 
     @BeforeEach
     public void initialization() {
-        manager = new InMemoryTaskManager();
+        manager = Managers.getDefault();
     }
 
     @Test
     public void subtaskCannotBeEpicForItself() {
-        Subtask subtask = manager.createSubtask(new Subtask("","",0));
+        Subtask subtask = manager.createSubtask(new Subtask("", "", 0));
         Assertions.assertNull(subtask.getId());
     }
 
@@ -42,16 +42,16 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void epicShouldNotChangeWhenValueChanged() {
-        Epic epic = manager.createEpic(new Epic("", ""));
-        epic.setName("Другое имя");
+        Epic epic = manager.createEpic(new Epic("a", ""));
+        epic.setName("b");
         Assertions.assertNotEquals(epic.getName(), manager.getEpicById(epic.getId()).getName());
     }
 
     @Test
     public void epicShouldNotChangeWhenSourceChanged() {
-        Epic source = new Epic("", "");
+        Epic source = new Epic("a", "");
         Epic epic = manager.createEpic(source);
-        source.setName("Другое имя");
+        source.setName("b");
         Assertions.assertNotEquals(source.getName(), manager.getEpicById(epic.getId()).getName());
     }
 
@@ -76,7 +76,8 @@ class InMemoryTaskManagerTest {
     public void taskShouldNotChangeWhenValueChanged() {
         Task task = manager.createTask(new Task("", ""));
         task.setName("Другое имя");
-        Assertions.assertNotEquals(task.getName(), manager.getEpicById(task.getId()).getName());
+        Assertions.assertNotEquals(task.getName(), manager.getTaskById(task.getId()).getName());
+
     }
 
     @Test

@@ -2,11 +2,12 @@ import modules.Epic;
 import modules.Subtask;
 import modules.Task;
 import modules.TaskStatus;
+import utility.InMemoryHistoryManager;
 import utility.InMemoryTaskManager;
 
 public class Main {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
-
+    static InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
     public static void main(String[] args) {
         Task task1 = new Task("Задача 1", "Первая задача."); // заполнение задач
         taskManager.createTask(task1);
@@ -61,8 +62,26 @@ public class Main {
     }
 
     private static void printAllTasks() {
-        System.out.println("Список задач: " + taskManager.getTasks());
-        System.out.println("Список эпиков: " + taskManager.getEpics());
-        System.out.println("Список подзадач: " + taskManager.getSubtasks());
+            System.out.println("Задачи:");
+            for (Task task : taskManager.getTasks()) {
+                System.out.println(task);
+            }
+            System.out.println("Эпики:");
+            for (Task epic : taskManager.getEpics()) {
+                System.out.println(epic);
+
+                for (Task task : taskManager.getEpicSubtasks(epic.getId())) {
+                    System.out.println("--> " + task);
+                }
+            }
+            System.out.println("Подзадачи:");
+            for (Task subtask : taskManager.getSubtasks()) {
+                System.out.println(subtask);
+            }
+
+            System.out.println("История:");
+            for (Task task : historyManager.getHistory()) {
+                System.out.println(task);
+            }
     }
 }

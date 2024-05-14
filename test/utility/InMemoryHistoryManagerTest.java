@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class InMemoryHistoryManagerTest {
-    private InMemoryTaskManager manager;
-    private InMemoryHistoryManager historyManager;
+    private TaskManager manager;
+    private HistoryManager historyManager;
     @BeforeEach
     public void initialization() {
-        manager = new InMemoryTaskManager();
-        historyManager = new InMemoryHistoryManager();
+        manager = Managers.getDefault();
+        historyManager = Managers.getDefaultHistory();
     }
 
     @Test
@@ -35,9 +35,8 @@ class InMemoryHistoryManagerTest {
         subtask.setName("b");
         manager.updateSubtask(subtask);
 
-        Assertions.assertNotEquals(
-                historyManager.getHistory().getFirst().getName(),
-                manager.getSubtaskById(subtask.getId()).getName());
+        Assertions.assertNotEquals( historyManager.getHistory().getFirst().getName(),
+                                    manager.getSubtaskById(subtask.getId()).getName());
     }
 
     @Test
