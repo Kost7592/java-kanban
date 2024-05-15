@@ -77,9 +77,18 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void CheckThatTheEpicCanNotBeItsOwnSubtask() {
-        Subtask subtask = new Subtask(epic1.getName(), epic1.getDescription(), epic1.getId());
-        manager.createSubtask(subtask);
-        Assertions.assert
+        Subtask subtask3 = new Subtask(epic1.getName(), epic1.getDescription(), epic1.getId());
+        subtask3.setId(epic1.getId());
+        manager.createSubtask(subtask3);
+        Assertions.assertNotEquals(manager.getEpicById(epic1.getId()), subtask3);
+    }
+
+    @Test
+    public void CheckThatTheSubtaskCanNotBeOwnEpic() {
+        Subtask subtask3 = new Subtask("Subtask3", "Subtask 3 description", epic1.getId());
+        subtask3.setId(epic1.getId());
+        manager.createSubtask(subtask3);
+        Assertions.assertNotEquals(manager.getEpicById(epic1.getId()), subtask3);
     }
 
 }
