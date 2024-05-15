@@ -13,7 +13,6 @@ class InMemoryTaskManagerTest {
     Task task2;
     Epic epic1;
     Subtask subtask1;
-
     Subtask subtask2;
 
     @BeforeEach
@@ -22,11 +21,11 @@ class InMemoryTaskManagerTest {
         task1 = new Task("Task 1", "Task 1 description");
         task2 = new Task("Task 2", "Task 2 description");
         epic1 = new Epic("Epic", "Epic description");
+        manager.createEpic(epic1);
         subtask1 = new Subtask("Subtask 1", "Subtask 1 description", epic1.getId());
         subtask2 = new Subtask("Subtask 2", "Subtask 2 description", epic1.getId());
         manager.createTask(task1);
         manager.createTask(task2);
-        manager.createEpic(epic1);
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
     }
@@ -48,7 +47,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void checkingThatTheTaskIsSavedInTheEpic() {
+    public void checkThatTheSubTaskIsSavedInTheEpic() {
         manager.createEpic(epic1);
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
@@ -64,7 +63,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void checkTheImmutabilityOfTheEpicAfterItsCreation() {
-        manager.createEpic(epic1);
         Assertions.assertEquals(epic1.getName(), manager.getEpicById(epic1.getId()).getName());
         Assertions.assertEquals(epic1.getDescription(), manager.getEpicById(epic1.getId()).getDescription());
         Assertions.assertEquals(epic1.getId(), manager.getEpicById(epic1.getId()).getId());
@@ -72,11 +70,16 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void checkTheImmutabilityOfTheSubtaskAfterItsCreation() {
-        manager.createEpic(epic1);
-        manager.createSubtask(subtask1);
         Assertions.assertEquals(subtask1.getName(), manager.getSubtaskById(subtask1.getId()).getName());
         Assertions.assertEquals(subtask1.getDescription(), manager.getSubtaskById(subtask1.getId()).getDescription());
         Assertions.assertEquals(subtask1.getId(), manager.getSubtaskById(subtask1.getId()).getId());
+    }
+
+    @Test
+    public void CheckThatTheEpicCanNotBeItsOwnSubtask() {
+        Subtask subtask = new Subtask(epic1.getName(), epic1.getDescription(), epic1.getId());
+        manager.createSubtask(subtask);
+        Assertions.assert
     }
 
 }

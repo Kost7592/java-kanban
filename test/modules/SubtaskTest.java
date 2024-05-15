@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubtaskTest {
 
     @Test
-    public void shouldBeEqualIfIdEqual() {
+    public void shouldBeEqualIfIdsEqual() {
         Subtask subtask1 = new Subtask("1", "1",1);
         Subtask subtask2 = new Subtask("1", "1", 1);
         subtask1.setId(1);

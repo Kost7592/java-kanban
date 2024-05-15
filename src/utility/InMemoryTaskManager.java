@@ -5,6 +5,7 @@ import modules.Subtask;
 import modules.Task;
 import modules.TaskStatus;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = new InMemoryHistoryManager();
     private Integer countOfId = 0;
 
     @Override
@@ -31,17 +32,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById (Integer id) {
-        historyManager.add(tasks.get(id));
+        historyManager.addView(tasks.get(id));
         return tasks.get(id);
     }
     @Override
     public Subtask getSubtaskById (Integer id) {
-        historyManager.add(subtasks.get(id));
+        historyManager.addView(subtasks.get(id));
         return subtasks.get(id);
     }
     @Override
     public Epic getEpicById(Integer id) {
-        historyManager.add(epics.get(id));
+        historyManager.addView(epics.get(id));
         return epics.get(id);
     }
     @Override
@@ -147,6 +148,10 @@ public class InMemoryTaskManager implements TaskManager {
         }
         Epic epic = getEpicById(subtask.getEpicId());
         return epic.getId();
+    }
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
     private void updateEpicStatus(Integer id) {

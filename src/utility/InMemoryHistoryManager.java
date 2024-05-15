@@ -1,18 +1,20 @@
 package utility;
 import modules.Task;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.ArrayList;
 
 public class InMemoryHistoryManager implements HistoryManager  {
 
     private static final int HISTORY_LENGTH = 10;
 
-    private final List<Task> viewHistory = new ArrayList<>();
+    private final List<Task> viewHistory = new LinkedList<>();
 
     @Override
-    public void add(Task task) {
-        viewHistory.add(task);
+    public void addView(Task task) {
+        Task taskCopy = new Task(task.getName(), task.getDescription());
+        taskCopy.setId(task.getId());
+        viewHistory.add(taskCopy);
         if(viewHistory.size() > HISTORY_LENGTH) {
                 viewHistory.removeFirst();
         }
