@@ -33,6 +33,8 @@ public interface TaskManager {
 
     void removeAllSubtasks();
 
+    Integer getEpicIdOfSubtask(Subtask subtask);
+
     Task createTask(Task newTask);
 
     Epic createEpic(Epic newEpic);

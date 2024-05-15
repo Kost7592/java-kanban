@@ -9,83 +9,74 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryTaskManagerTest {
     private TaskManager manager;
+    Task task1;
+    Task task2;
+    Epic epic1;
+    Subtask subtask1;
+
+    Subtask subtask2;
 
     @BeforeEach
     public void initialization() {
         manager = Managers.getDefault();
-    }
-
-    @Test
-    public void subtaskCannotBeEpicForItself() {
-        Subtask subtask = manager.createSubtask(new Subtask("", "", 0));
-        Assertions.assertNull(subtask.getId());
-    }
-
-    @Test
-    public void checkThatManagerCanCreateEpicAndGiveItById() {
-        Epic epic = manager.createEpic(new Epic("",""));
-        Assertions.assertNotNull(epic.getId());
-    }
-
-    @Test
-    public void checkThatManagerCanCreateSubtaskAndGiveItById() {
-        Epic epic = manager.createEpic(new Epic("",""));
-        Subtask subtask = manager.createSubtask(new Subtask("", "", epic.getId()));
-        Assertions.assertNotNull(manager.getSubtaskById(subtask.getId()));
+        task1 = new Task("Task 1", "Task 1 description");
+        task2 = new Task("Task 2", "Task 2 description");
+        epic1 = new Epic("Epic", "Epic description");
+        subtask1 = new Subtask("Subtask 1", "Subtask 1 description", epic1.getId());
+        subtask2 = new Subtask("Subtask 2", "Subtask 2 description", epic1.getId());
+        manager.createTask(task1);
+        manager.createTask(task2);
+        manager.createEpic(epic1);
+        manager.createSubtask(subtask1);
+        manager.createSubtask(subtask2);
     }
 
     @Test
     public void checkThatManagerCanCreateTaskAndGiveItById() {
-        Task task = manager.createTask(new Task("", ""));
-        Assertions.assertNotNull(manager.getTaskById(task.getId()));
+        Assertions.assertEquals(task1, manager.getTaskById(task1.getId()));
     }
 
     @Test
-    public void epicShouldNotChangeWhenValueChanged() {
-        Epic epic = manager.createEpic(new Epic("a", ""));
-        epic.setName("b");
-        Assertions.assertNotEquals(epic.getName(), manager.getEpicById(epic.getId()).getName());
+    public void checkThatManagerCanCreateEpicAndGiveItById() {
+        Assertions.assertEquals(epic1, manager.getEpicById(epic1.getId()));
     }
 
     @Test
-    public void epicShouldNotChangeWhenSourceChanged() {
-        Epic source = new Epic("a", "");
-        Epic epic = manager.createEpic(source);
-        source.setName("b");
-        Assertions.assertNotEquals(source.getName(), manager.getEpicById(epic.getId()).getName());
+    public void checkThatManagerCanCreateSubtaskAndGiveItById() {
+        manager.createSubtask(subtask1);
+        Assertions.assertEquals(subtask1, manager.getSubtaskById(subtask1.getId()));
     }
 
     @Test
-    public void subtaskShouldNotChangeWhenValueChanged() {
-        Epic epic = manager.createEpic(new Epic("", ""));
-        Subtask subtask = manager.createSubtask(new Subtask("a", "", epic.getId()));
-        subtask.setName("b");
-        Assertions.assertNotEquals(subtask.getName(), manager.getSubtaskById(subtask.getId()).getName());
+    public void checkingThatTheTaskIsSavedInTheEpic() {
+        manager.createEpic(epic1);
+        manager.createSubtask(subtask1);
+        manager.createSubtask(subtask2);
+        Assertions.assertNotNull(manager.getEpicSubtasks(epic1.getId()));
+    }
+    @Test
+    public void checkTheImmutabilityOfTheTaskAfterItsCreation() {
+        manager.createTask(task1);
+        Assertions.assertEquals(task1.getName(), manager.getTaskById(task1.getId()).getName());
+        Assertions.assertEquals(task1.getDescription(), manager.getTaskById(task1.getId()).getDescription());
+        Assertions.assertEquals(task1.getId(), manager.getTaskById(task1.getId()).getId());
     }
 
     @Test
-    public void subtaskShouldNotChangeWhenSourceChanged() {
-        Epic epic = manager.createEpic(new Epic("", ""));
-        Subtask source = manager.createSubtask(new Subtask("", "", epic.getId()));
-        Subtask subtask = manager.createSubtask(new Subtask("" ,"", epic.getId()));
-        source.setName("Другое имя");
-        Assertions.assertNotEquals(source.getName(), manager.getSubtaskById(subtask.getId()).getName());
+    public void checkTheImmutabilityOfTheEpicAfterItsCreation() {
+        manager.createEpic(epic1);
+        Assertions.assertEquals(epic1.getName(), manager.getEpicById(epic1.getId()).getName());
+        Assertions.assertEquals(epic1.getDescription(), manager.getEpicById(epic1.getId()).getDescription());
+        Assertions.assertEquals(epic1.getId(), manager.getEpicById(epic1.getId()).getId());
     }
 
     @Test
-    public void taskShouldNotChangeWhenValueChanged() {
-        Task task = manager.createTask(new Task("", ""));
-        task.setName("Другое имя");
-        Assertions.assertNotEquals(task.getName(), manager.getTaskById(task.getId()).getName());
-
-    }
-
-    @Test
-    public void taskShouldNotChangeWhenSourceChanged() {
-        Task source = new Task("", "");
-        Task task = manager.createTask(new Task("", ""));
-        source.setName("Другое имя");
-        Assertions.assertNotEquals(source.getName(), manager.getTaskById(task.getId()).getName());
+    public void checkTheImmutabilityOfTheSubtaskAfterItsCreation() {
+        manager.createEpic(epic1);
+        manager.createSubtask(subtask1);
+        Assertions.assertEquals(subtask1.getName(), manager.getSubtaskById(subtask1.getId()).getName());
+        Assertions.assertEquals(subtask1.getDescription(), manager.getSubtaskById(subtask1.getId()).getDescription());
+        Assertions.assertEquals(subtask1.getId(), manager.getSubtaskById(subtask1.getId()).getId());
     }
 
 }
