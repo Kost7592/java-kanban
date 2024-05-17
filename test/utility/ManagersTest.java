@@ -3,7 +3,7 @@ package utility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ManagersTest {//в первый раз, почему то, этот тест не с коммитился и не выгрузился на гитхаб
+class ManagersTest {
 
     @Test
     public void checkThatAlwaysReturnsReadyToUseTaskManager() {
