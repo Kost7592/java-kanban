@@ -1,22 +1,23 @@
 package utility;
 import modules.Task;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager  {
 
-    private static final int HISTORY_LENGTH = 10;
-
-    private final List<Task> viewHistory = new LinkedList<>();
+    private final List<Node> viewHistory = new LinkedList<>();
+    private Map<Integer, Node> nodes = new HashMap<>();
+    private Node head;
+    private Node tail;
 
     @Override
     public void addView(Task task) {
-        Task taskCopy = new Task(task.getName(), task.getDescription());
-        taskCopy.setId(task.getId());
-        viewHistory.add(taskCopy);
-        if(viewHistory.size() > HISTORY_LENGTH) {
-                viewHistory.removeFirst();
+        int taskId = task.getId();
+        if(nodes.containsKey(taskId)) {
+
         }
     }
 
@@ -26,7 +27,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
     }
 
     @Override
-    public List<Task> getHistory() {
+    public List<Node> getHistory() {
         return viewHistory;
     }
 
