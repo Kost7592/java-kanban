@@ -88,7 +88,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void  removeAllEpics(){
+    public void  removeAllEpics() {
         if (!(subtasks.isEmpty())) {
             removeAllSubtasks();
         }
