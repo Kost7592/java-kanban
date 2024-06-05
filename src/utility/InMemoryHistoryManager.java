@@ -12,13 +12,14 @@ public class InMemoryHistoryManager implements HistoryManager  {
 
     @Override
     public void addView(Task task) {
-        int taskId = task.getId();
-        if(nodes.containsKey(taskId)) {
-            Node node = nodes .remove(taskId);
+        Task taskCopy = new Task(task.getName(), task.getDescription());
+        taskCopy.setId(task.getId());
+        if(nodes.containsKey(taskCopy.getId())) {
+            Node node = nodes.remove(taskCopy.getId());
             removeNode(node);
         }
-        linkLast(task);
-        nodes.put(taskId, tail);
+        linkLast(taskCopy);
+        nodes.put(taskCopy.getId(), tail);
     }
 
     @Override

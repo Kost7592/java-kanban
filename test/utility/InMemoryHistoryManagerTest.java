@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,9 +40,17 @@ class InMemoryHistoryManagerTest {
         manager.getEpicById(epic1.getId());
         epic1.setName("Epic 11");
         manager.updateEpic(epic1);
-
         Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
                                    manager.getEpicById(epic1.getId()));
+    }
+
+    @Test
+    public void checkingThatDuplikatesRemovesFromHistory() {
+        manager.getTaskById(task1.getId());
+        manager.getTaskById(task2.getId());
+        manager.getTaskById(task1.getId());
+        List<Task> tasks = manager.getHistory();
+        Assertions.assertEquals(2, tasks.size());
     }
 
     @Test
@@ -51,7 +60,6 @@ class InMemoryHistoryManagerTest {
         manager.getSubtaskById(subtask.getId());
         subtask.setName("b");
         manager.updateSubtask(subtask);
-
         Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
                                    manager.getSubtaskById(subtask.getId()).getName());
     }
@@ -62,7 +70,6 @@ class InMemoryHistoryManagerTest {
         manager.getTaskById(task.getId());
         task.setName("b");
         manager.updateTask(task);
-
         Assertions.assertNotEquals(
                 manager.getHistory().getFirst().getName(),
                 manager.getTaskById(task.getId()).getName());
