@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,19 +32,23 @@ class InMemoryHistoryManagerTest {
         Assertions.assertNotNull(manager.getHistory());
         Assertions.assertEquals(manager.getHistory(), tasks);
     }
+
     @Test
     public void checkingThatEpicDoesNotChangeInHistory() {
         Epic epic1 = new Epic("Epic1", "Description");
+        Epic epic2 = new Epic("Epic2", "Description");
         manager.createEpic(epic1);
+        manager.createEpic(epic2);
+        manager.getEpicById(epic2.getId());
         manager.getEpicById(epic1.getId());
         epic1.setName("Epic 11");
         manager.updateEpic(epic1);
-        Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
-                                   manager.getEpicById(epic1.getId()));
+        Assertions.assertNotEquals(manager.getHistory().getLast().getName(),
+                                   manager.getEpicById(epic1.getId()).getName());
     }
 
     @Test
-    public void checkingThatDuplikatesRemovesFromHistory() {
+    public void checkingThatDuplicateRemoveFromHistory() {
         manager.getTaskById(task1.getId());
         manager.getTaskById(task2.getId());
         manager.getTaskById(task1.getId());
@@ -60,7 +63,7 @@ class InMemoryHistoryManagerTest {
         manager.getSubtaskById(subtask.getId());
         subtask.setName("b");
         manager.updateSubtask(subtask);
-        Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
+        Assertions.assertNotEquals(manager.getHistory().getLast().getName(),
                                    manager.getSubtaskById(subtask.getId()).getName());
     }
 
@@ -70,9 +73,8 @@ class InMemoryHistoryManagerTest {
         manager.getTaskById(task.getId());
         task.setName("b");
         manager.updateTask(task);
-        Assertions.assertNotEquals(
-                manager.getHistory().getFirst().getName(),
-                manager.getTaskById(task.getId()).getName());
+        Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
+                                   manager.getTaskById(task.getId()).getName());
     }
 
 }

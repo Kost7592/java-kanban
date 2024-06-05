@@ -6,7 +6,7 @@ import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager  {
     
-    private Map<Integer, Node> nodes = new HashMap<>();
+    private final Map<Integer, Node> nodes = new HashMap<>();
     private Node head;
     private Node tail;
 
@@ -14,7 +14,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
     public void addView(Task task) {
         Task taskCopy = new Task(task.getName(), task.getDescription());
         taskCopy.setId(task.getId());
-        if(nodes.containsKey(taskCopy.getId())) {
+        if (nodes.containsKey(taskCopy.getId())) {
             Node node = nodes.remove(taskCopy.getId());
             removeNode(node);
         }
