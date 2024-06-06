@@ -6,6 +6,7 @@ import utility.InMemoryTaskManager;
 
 public class Main {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
+
     public static void main(String[] args) {
         Task task1 = new Task("Задача 1", "Первая задача."); // заполнение задач
         taskManager.createTask(task1);
