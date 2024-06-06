@@ -90,5 +90,4 @@ class InMemoryTaskManagerTest {
         manager.createSubtask(subtask3);
         Assertions.assertNotEquals(manager.getEpicById(epic1.getId()), subtask3);
     }
-
 }

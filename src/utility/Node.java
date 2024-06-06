@@ -16,6 +16,7 @@ public class Node {
     public Node getPrev() {
         return prev;
     }
+
     public Task getTask() {
         return task;
     }
