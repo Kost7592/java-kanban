@@ -35,15 +35,12 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void checkingThatEpicDoesNotChangeInHistory() {
-        Epic epic1 = new Epic("Epic1", "Description");
-        Epic epic2 = new Epic("Epic2", "Description");
+        Epic epic1 = new Epic("a", "");
         manager.createEpic(epic1);
-        manager.createEpic(epic2);
-        manager.getEpicById(epic2.getId());
         manager.getEpicById(epic1.getId());
-        epic1.setName("Epic 11");
+        epic1.setName("b");
         manager.updateEpic(epic1);
-        Assertions.assertNotEquals(manager.getHistory().getLast().getName(),
+        Assertions.assertNotEquals(manager.getHistory().get(0).getName(),
                                    manager.getEpicById(epic1.getId()).getName());
     }
 
@@ -76,5 +73,4 @@ class InMemoryHistoryManagerTest {
         Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
                                    manager.getTaskById(task.getId()).getName());
     }
-
 }

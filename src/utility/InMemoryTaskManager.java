@@ -158,7 +158,6 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(Epic newEpic) {
         if (epics.containsKey(newEpic.getId())) {
             epics.put(newEpic.getId(),newEpic);
-            updateEpicStatus(newEpic.getId());
         }
     }
 
