@@ -5,7 +5,6 @@ import modules.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager  {
-    
     private final Map<Integer, Node> nodes = new HashMap<>();
     private Node head;
     private Node tail;
@@ -38,7 +37,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
 
     public void linkLast(Task task) {
         Node oldTail = tail;
-        Node newNode = new Node (oldTail,task,null);
+        Node newNode = new Node(oldTail,task,null);
         tail = newNode;
         if (oldTail == null) {
             head = newNode;
@@ -51,7 +50,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
 
     public List<Task> getTasks() {
         List<Task> taskList = new ArrayList<>();
-        Node node =head;
+        Node node = head;
         while (node != null) {
             taskList.add(node.getTask());
             node = node.getNext();
