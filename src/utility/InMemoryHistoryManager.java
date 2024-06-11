@@ -10,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
     private Node tail;
 
     @Override
-    public void addView(Task task) {
+    public void addView(Task task) { //добавление просмотра в историю
         Task taskCopy = new Task(task.getName(), task.getDescription());
         taskCopy.setId(task.getId());
         if (nodes.containsKey(taskCopy.getId())) {
@@ -22,7 +22,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(int id) { //удаление просмотра из истории
         if (nodes.containsKey(id)) {
             Node node = nodes.get(id);
             nodes.remove(id);
@@ -33,9 +33,9 @@ public class InMemoryHistoryManager implements HistoryManager  {
     @Override
     public List<Task> getHistory() {
         return getTasks();
-    }
+    } // получение списка истории
 
-    public void linkLast(Task task) {
+    private void linkLast(Task task) { //добавление задачи в конец списка
         Node oldTail = tail;
         Node newNode = new Node(oldTail,task,null);
         tail = newNode;
@@ -48,7 +48,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
         nodes.put(id, newNode);
     }
 
-    public List<Task> getTasks() {
+    private List<Task> getTasks() { //реализация логики получения списка истории
         List<Task> taskList = new ArrayList<>();
         Node node = head;
         while (node != null) {
@@ -58,7 +58,7 @@ public class InMemoryHistoryManager implements HistoryManager  {
         return taskList;
     }
 
-    public void removeNode(Node node) {
+    private void removeNode(Node node) { //релаизация логики удаления записи из истории
         Node next = node.getNext();
         Node prev = node.getPrev();
         if (prev == null) {

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskTest {
 
     @Test
-    public void shouldBeEqualIfIdsEqual() {
+    public void shouldBeEqualIfIdsEqual() { //проверка равенства задач при их одинаковых id
         Task task1 = new Task("1", "1");
         Task task2 = new Task("1", "1");
         task1.setId(1);

@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 class ManagersTest {
     @Test
-    public void checkThatAlwaysReturnsReadyToUseTaskManager() {
+    public void checkThatAlwaysReturnsReadyToUseTaskManager() { //диспетчер задач всегда возвращает менеджер задач
         Assertions.assertNotNull(Managers.getDefault());
     }
 
     @Test
-    public void checkThatAlwaysReturnsReadyToUseHistoryTaskManager() {
-        Assertions.assertNotNull(Managers.getDefaultHistory());
+    public void checkThatAlwaysReturnsReadyToUseHistoryTaskManager() { //диспетчер задач всегда возвращает
+        Assertions.assertNotNull(Managers.getDefaultHistory());        //менеджер истории
     }
 }

@@ -16,7 +16,7 @@ class InMemoryHistoryManagerTest {
     Task task2;
 
     @BeforeEach
-    public void initialization() {
+    public void initialization() { //инициализация
         manager = Managers.getDefault();
         task1 = new Task("Task 1", "Task 1 description");
         task2 = new Task("Task 2", "Task 2 description");
@@ -25,7 +25,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkingThatTheHistoryIsBeingAdded() {
+    public void checkingThatTheHistoryIsBeingAdded() { //проверка заполнения истории
         List<Task> tasks = new LinkedList<>();
         tasks.add(manager.getTaskById(task1.getId()));
         tasks.add(manager.getTaskById(task2.getId()));
@@ -34,7 +34,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkingThatEpicDoesNotChangeInHistory() {
+    public void checkingThatEpicDoesNotChangeInHistory() { //проверка неизменности эпика в истории
         Epic epic1 = new Epic("a", "");
         manager.createEpic(epic1);
         manager.getEpicById(epic1.getId());
@@ -45,7 +45,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkingThatDuplicateRemoveFromHistory() {
+    public void checkingThatDuplicateRemoveFromHistory() { //проверка удаления дублирующейся записи из истории
         manager.getTaskById(task1.getId());
         manager.getTaskById(task2.getId());
         manager.getTaskById(task1.getId());
@@ -54,7 +54,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkingThatSubtaskDoesNotChangeInHistory() {
+    public void checkingThatSubtaskDoesNotChangeInHistory() { //проверка неизменности подзадачи в истории
         Epic epic = manager.createEpic(new Epic("", ""));
         Subtask subtask = manager.createSubtask(new Subtask("a", "", epic.getId()));
         manager.getSubtaskById(subtask.getId());
@@ -65,7 +65,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkingThatTaskDoesNotChangeInHistory() {
+    public void checkingThatTaskDoesNotChangeInHistory() { //проверка неизменности задачи в истории
         Task task = manager.createTask(new Task("a", ""));
         manager.getTaskById(task.getId());
         task.setName("b");

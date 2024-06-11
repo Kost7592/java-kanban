@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubtaskTest {
 
     @Test
-    public void shouldBeEqualIfIdsEqual() {
+    public void shouldBeEqualIfIdsEqual() { //проверка равенства подзадач при их одинаковых id
         Subtask subtask1 = new Subtask("1", "1",1);
         Subtask subtask2 = new Subtask("1", "1", 1);
         subtask1.setId(1);

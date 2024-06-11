@@ -16,7 +16,7 @@ class InMemoryTaskManagerTest {
     Subtask subtask2;
 
     @BeforeEach
-    public void initialization() {
+    public void initialization() { //инициализация
         manager = Managers.getDefault();
         task1 = new Task("Task 1", "Task 1 description");
         task2 = new Task("Task 2", "Task 2 description");
@@ -31,30 +31,30 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void checkThatManagerCanCreateTaskAndGiveItById() {
+    public void checkThatManagerCanCreateTaskAndGiveItById() { //менеджер задач может создавать и выдавать задачу по id
         Assertions.assertEquals(task1, manager.getTaskById(task1.getId()));
     }
 
     @Test
-    public void checkThatManagerCanCreateEpicAndGiveItById() {
+    public void checkThatManagerCanCreateEpicAndGiveItById() { //менеджер задач может создавать и выдавать эпик по id
         Assertions.assertEquals(epic1, manager.getEpicById(epic1.getId()));
     }
 
     @Test
-    public void checkThatManagerCanCreateSubtaskAndGiveItById() {
-        manager.createSubtask(subtask1);
+    public void checkThatManagerCanCreateSubtaskAndGiveItById() { //менеджер задач может создавать и выдавать
+        manager.createSubtask(subtask1);                          // подзадачу по id
         Assertions.assertEquals(subtask1, manager.getSubtaskById(subtask1.getId()));
     }
 
     @Test
-    public void checkThatTheSubTaskIsSavedInTheEpic() {
+    public void checkThatTheSubTaskIsSavedInTheEpic() { //подзадача сохраняется в эпике
         manager.createEpic(epic1);
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
         Assertions.assertNotNull(manager.getEpicSubtasks(epic1.getId()));
     }
     @Test
-    public void checkTheImmutabilityOfTheTaskAfterItsCreation() {
+    public void checkTheImmutabilityOfTheTaskAfterItsCreation() { //проверка неизменности задачи после ее создания
         manager.createTask(task1);
         Assertions.assertEquals(task1.getName(), manager.getTaskById(task1.getId()).getName());
         Assertions.assertEquals(task1.getDescription(), manager.getTaskById(task1.getId()).getDescription());
@@ -62,21 +62,21 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void checkTheImmutabilityOfTheEpicAfterItsCreation() {
+    public void checkTheImmutabilityOfTheEpicAfterItsCreation() { //проверка неизменности эпика после его создания
         Assertions.assertEquals(epic1.getName(), manager.getEpicById(epic1.getId()).getName());
         Assertions.assertEquals(epic1.getDescription(), manager.getEpicById(epic1.getId()).getDescription());
         Assertions.assertEquals(epic1.getId(), manager.getEpicById(epic1.getId()).getId());
     }
 
     @Test
-    public void checkTheImmutabilityOfTheSubtaskAfterItsCreation() {
+    public void checkTheImmutabilityOfTheSubtaskAfterItsCreation() { //проверка неизменности подзадачи после ее создания
         Assertions.assertEquals(subtask1.getName(), manager.getSubtaskById(subtask1.getId()).getName());
         Assertions.assertEquals(subtask1.getDescription(), manager.getSubtaskById(subtask1.getId()).getDescription());
         Assertions.assertEquals(subtask1.getId(), manager.getSubtaskById(subtask1.getId()).getId());
     }
 
     @Test
-    public void CheckThatTheEpicCanNotBeItsOwnSubtask() {
+    public void CheckThatTheEpicCanNotBeItsOwnSubtask() { //проверка, что эпик не может быть своей подзадачей
         Subtask subtask3 = new Subtask(epic1.getName(), epic1.getDescription(), epic1.getId());
         subtask3.setId(epic1.getId());
         manager.createSubtask(subtask3);
@@ -84,7 +84,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void CheckThatTheSubtaskCanNotBeOwnEpic() {
+    public void CheckThatTheSubtaskCanNotBeOwnEpic() { //проверка, что подзадача не может быть своим эпиком
         Subtask subtask3 = new Subtask("Subtask3", "Subtask 3 description", epic1.getId());
         subtask3.setId(epic1.getId());
         manager.createSubtask(subtask3);
