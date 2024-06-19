@@ -22,50 +22,60 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
+
     @Override
     public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
+
     @Override
     public List<Epic> getEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public Task getTaskById (Integer id) {
+    public Task getTaskById(Integer id) { //получение задачи по id
         historyManager.addView(tasks.get(id));
         return tasks.get(id);
     }
+
     @Override
-    public Subtask getSubtaskById (Integer id) {
+    public Subtask getSubtaskById(Integer id) { //получение подзадачи по id
         historyManager.addView(subtasks.get(id));
         return subtasks.get(id);
     }
+
     @Override
-    public Epic getEpicById(Integer id) {
+    public Epic getEpicById(Integer id) { // получение эпика по id
         historyManager.addView(epics.get(id));
         return epics.get(id);
     }
+
     @Override
-    public void removeTaskById (Integer id) {
+    public void removeTaskById(Integer id) { //удаление задачи по id
         tasks.remove(id);
+        historyManager.remove(id);
     }
+
     @Override
     public void removeAllTasks() {
         tasks.clear();
-    }
+    } //удаление всех задач
+
     @Override
-    public void removeEpicById(Integer id) {
+    public void removeEpicById(Integer id) { //удаление эпика по id
         Epic epic = getEpicById(id);
-        if(epics.containsKey(id)) {
+        if (epics.containsKey(id)) {
             for (Integer subtaskId: epic.getSubtasksId()) {
                 subtasks.remove(subtaskId);
             }
         }
         epics.remove(id);
+        historyManager.remove(id);
     }
+
     @Override
-    public List<Subtask> getEpicSubtasks(Integer id) {
+    public List<Subtask> getEpicSubtasks(Integer id) { //получение всех подзадач одного эпика
         if (epics.containsKey(id)) {
             ArrayList<Subtask> epicSubtasks = new ArrayList<>();
             Epic epic = epics.get(id);
@@ -76,43 +86,50 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return new ArrayList<>();
     }
+
     @Override
-    public void  removeAllEpics(){
-        if(!(subtasks.isEmpty())) {
+    public void  removeAllEpics() { //удаление всех эпиков
+        if (!(subtasks.isEmpty())) {
             removeAllSubtasks();
         }
         epics.clear();
     }
+
     @Override
-    public void removeSubtaskById(Integer id) {
+    public void removeSubtaskById(Integer id) { //удаление подзадачи по id
         Epic epic = getEpicById(subtasks.get(id).getEpicId());
         epic.getSubtasksId().remove(id);
         subtasks.remove(id);
+        historyManager.remove(id);
     }
+
     @Override
-    public void removeAllSubtasks() {
+    public void removeAllSubtasks() { //удаление всех подзадач
         subtasks.clear();
-        for(Epic epic: epics.values()) {
+        for (Epic epic: epics.values()) {
             epic.setSubtasksId(new ArrayList<>());
             updateEpicStatus(epic.getId());
         }
     }
+
     @Override
-    public Task createTask(Task newTask) {
+    public Task createTask(Task newTask) { //создание задачи
         newTask.setId(getNewId());
         tasks.put(newTask.getId(),newTask);
         return newTask;
     }
+
     @Override
-    public Epic createEpic(Epic newEpic) {
+    public Epic createEpic(Epic newEpic) { //создание эпика
         newEpic.setId(getNewId());
         epics.put(newEpic.getId(),newEpic);
         return newEpic;
     }
+
     @Override
-    public Subtask createSubtask(Subtask newSubtask) {
+    public Subtask createSubtask(Subtask newSubtask) { //создание подзадачи
         newSubtask.setId(getNewId());
-        if(epics.containsKey(getEpicIdOfSubtask(newSubtask))) {
+        if (epics.containsKey(getEpicIdOfSubtask(newSubtask))) {
             subtasks.put(newSubtask.getId(), newSubtask);
             Epic epic = epics.get(newSubtask.getEpicId());
             epic.getSubtasksId().add(newSubtask.getId());
@@ -121,41 +138,44 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return newSubtask;
     }
+
     @Override
-    public void updateTask (Task newTask) {
+    public void updateTask(Task newTask) { //обновление задачи
         if (tasks.containsKey(newTask.getId())) {
             tasks.put((newTask.getId()), newTask);
         }
     }
+
     @Override
-    public void updateSubtask(Subtask newSubtask) {
-        if(subtasks.containsKey(newSubtask.getId()) && epics.containsKey(newSubtask.getEpicId())) {
+    public void updateSubtask(Subtask newSubtask) { //обновление подзадачи
+        if (subtasks.containsKey(newSubtask.getId()) && epics.containsKey(newSubtask.getEpicId())) {
             subtasks.put(newSubtask.getId(), newSubtask);
             updateEpicStatus(newSubtask.getEpicId());
         }
     }
+
     @Override
-    public void updateEpic(Epic newEpic) {
+    public void updateEpic(Epic newEpic) { //обновление эпика
         if (epics.containsKey(newEpic.getId())) {
             epics.put(newEpic.getId(),newEpic);
-            updateEpicStatus(newEpic.getId());
         }
     }
 
     @Override
-    public Integer getEpicIdOfSubtask(Subtask subtask) {
+    public Integer getEpicIdOfSubtask(Subtask subtask) { //получение id эпика у подзадачи
         if (epics.isEmpty()) {
             return null;
         }
         Epic epic = getEpicById(subtask.getEpicId());
         return epic.getId();
     }
+
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
-    private void updateEpicStatus(Integer id) {
+    private void updateEpicStatus(Integer id) { //обновление статуса эпика
         int countOfDone = 0;
         int countOfNew = 0;
         Epic epic = getEpicById(id);
@@ -178,5 +198,5 @@ public class InMemoryTaskManager implements TaskManager {
 
     private Integer getNewId() {
         return countOfId++;
-    }
+    } //получение нового id счетчиком
 }

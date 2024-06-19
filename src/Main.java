@@ -6,6 +6,7 @@ import utility.InMemoryTaskManager;
 
 public class Main {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
+
     public static void main(String[] args) {
         Task task1 = new Task("Задача 1", "Первая задача."); // заполнение задач
         taskManager.createTask(task1);
@@ -28,6 +29,8 @@ public class Main {
         Subtask subtask2Epic2 = new Subtask("Подзадача 2","Вторая подзадача эпика 2", epic2.getId());
         taskManager.createSubtask(subtask2Epic2);
         System.out.println("Заполнение задач");
+        taskManager.getTaskById(task1.getId());
+        taskManager.getSubtaskById(subtask1Epic1.getId()); //проверка заполнения истории
         printAllTasks();
 
         task1.setStatus(TaskStatus.DONE); // обновление статусов

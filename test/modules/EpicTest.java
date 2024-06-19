@@ -7,12 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class EpicTest {
 
     @Test
-    public void shouldBeEqualIfIdsEqual(){
+    public void shouldBeEqualIfIdsEqual(){ //проверка равенства эпиков при их одинаковых id
         Epic epic1 = new Epic("1", "1");
         Epic epic2 = new Epic("1", "1");
         epic1.setId(1);
         epic2.setId(1);
         assertEquals(epic1, epic2);
     }
-
 }
