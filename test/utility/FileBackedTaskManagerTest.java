@@ -66,9 +66,9 @@ public class FileBackedTaskManagerTest {
         fileManager.removeAllTasks();
         fileManager.removeAllSubtasks();
         fileManager.removeAllEpics();
-        assertEquals(0, fileManager.getTasks());
-        assertEquals(0, fileManager.getEpics());
-        assertEquals(0, fileManager.getSubtasks());
+        assertEquals(0, fileManager.getTasks().size());
+        assertEquals(0, fileManager.getEpics().size());
+        assertEquals(0, fileManager.getSubtasks().size());
         fileManager.loadFromFile(copyFile);
         assertEquals(2, fileManager.getTasks().size());
         assertEquals(1,fileManager.getEpics().size());
