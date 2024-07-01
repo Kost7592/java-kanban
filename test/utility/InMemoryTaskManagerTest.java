@@ -76,7 +76,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void CheckThatTheEpicCanNotBeItsOwnSubtask() { //проверка, что эпик не может быть своей подзадачей
+    public void checkThatTheEpicCanNotBeItsOwnSubtask() { //проверка, что эпик не может быть своей подзадачей
         Subtask subtask3 = new Subtask(epic1.getName(), epic1.getDescription(), epic1.getId());
         subtask3.setId(epic1.getId());
         manager.createSubtask(subtask3);
@@ -84,7 +84,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void CheckThatTheSubtaskCanNotBeOwnEpic() { //проверка, что подзадача не может быть своим эпиком
+    public void checkThatTheSubtaskCanNotBeOwnEpic() { //проверка, что подзадача не может быть своим эпиком
         Subtask subtask3 = new Subtask("Subtask3", "Subtask 3 description", epic1.getId());
         subtask3.setId(epic1.getId());
         manager.createSubtask(subtask3);

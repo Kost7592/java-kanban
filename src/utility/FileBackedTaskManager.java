@@ -7,7 +7,6 @@ import modules.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -133,7 +132,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    public void loadFromFile(File file) {
+    public void loadFromFile(File file) { //прием задач из файла
         try (BufferedReader reader = new BufferedReader(new FileReader(file.toString()))) {
             reader.readLine();
             while (true) {
