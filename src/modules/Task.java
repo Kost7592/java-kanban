@@ -23,13 +23,6 @@ public class Task {
         this.type = type;
     }
 
-    public Task(Integer id, String name, TaskStatus status, String description) {
-        this.id= id;
-        this.name = name;
-        this.status = status;
-        this.description = description;
-    }
-
     public String getName() {
         return name;
     }

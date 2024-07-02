@@ -29,14 +29,14 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void checkThatToSaveAndDownloadAnEmptyFile() {
+    public void checkThatToSaveAndDownloadAnEmptyFile() { // проверка сохранения и загрузки не заполненного файла
         assertNotNull(tempFile);
         fileManager.saveTask();
         fileManager.loadFromFile(tempFile);
     }
 
     @Test
-    public void checkingForSavingTasks() { //проверка сохранения задач
+    public void checkingForSavingTasks() { //проверка сохранения задач в файл
         createTasksManually();
         assertEquals(2, fileManager.getTasks().size());
         assertEquals(1,fileManager.getEpics().size());
@@ -60,7 +60,7 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void checkingForLoadingTasks() {
+    public void checkingForLoadingTasks() { //проверка загрузки задач из файла
         createTasksManually();
         File copyFile = copyFile(tempFile);
         fileManager.removeAllTasks();
@@ -78,9 +78,9 @@ public class FileBackedTaskManagerTest {
     private void createTasksManually() { //создание задач "вручную"
         Task task1 = new Task(0, TaskType.TASK, "Task1", TaskStatus.NEW,"Task1 description");
         Task task2 = new Task(1, TaskType.TASK, "Task2", TaskStatus.NEW,"Task2 description");
-        Epic epic1 = new Epic(2,"Epic1",TaskStatus.NEW,"Epic1 description",new ArrayList<>());
-        Subtask subtask1 = new Subtask(3,"Subtask1",TaskStatus.NEW,"Subtask1 description",2);
-        Subtask subtask2 = new Subtask(4,"Subtask2",TaskStatus.NEW,"Subtask2 description",2);
+        Epic epic1 = new Epic(2,TaskType.EPIC, "Epic1",TaskStatus.NEW,"Epic1 description",new ArrayList<>());
+        Subtask subtask1 = new Subtask(3, TaskType.SUBTASK,"Subtask1",TaskStatus.NEW,"Subtask1 description",2);
+        Subtask subtask2 = new Subtask(4,TaskType.SUBTASK,"Subtask2",TaskStatus.NEW,"Subtask2 description",2);
         fileManager.createTask(task1);
         fileManager.createTask(task2);
         fileManager.createEpic(epic1);

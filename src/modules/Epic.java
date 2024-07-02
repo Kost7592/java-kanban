@@ -1,6 +1,5 @@
 package modules;
 
-import java.lang.reflect.AnnotatedArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class Epic extends Task {
         super(name, description);
     }
 
-    public Epic(Integer id, String name, TaskStatus status, String description, List<Integer> subtasksId) {
-        super(id, name, status, description);
+    public Epic(Integer id, TaskType type, String name, TaskStatus status, String description, List<Integer> subtasksId) {
+        super(id, type, name, status, description);
         this.subtasksId = subtasksId;
     }
 

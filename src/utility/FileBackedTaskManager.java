@@ -123,10 +123,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus status = TaskStatus.valueOf(taskLines[3]);
         String description = taskLines[4];
         if (type.equals(TaskType.EPIC)) {
-            return new Epic(id, name, status, description, new ArrayList<>());
+            return new Epic(id, TaskType.EPIC, name, status, description, new ArrayList<>());
         } else if (type.equals(TaskType.SUBTASK)) {
             int epic = Integer.parseInt(taskLines[5]);
-            return new Subtask(id, name, status,description, epic);
+            return new Subtask(id, TaskType.SUBTASK, name, status,description, epic);
         } else {
             return new Task(id, type, name,  status, description);
         }
