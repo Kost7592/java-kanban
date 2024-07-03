@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FileBackedTaskManagerTest {
     File tempFile;
-    FileBackedTaskManager fileManager;
+    private static FileBackedTaskManager fileManager;
 
     @BeforeEach
     public void initialization() {
