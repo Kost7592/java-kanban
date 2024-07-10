@@ -14,13 +14,9 @@ import static java.util.Objects.isNull;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private Path file;
 
-    private FileBackedTaskManager(Path file) {
+    FileBackedTaskManager(Path file) {
         super();
         this.file = file;
-    }
-
-    public FileBackedTaskManager() {
-        super();
     }
 
     @Override
@@ -122,7 +118,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = taskLines[2];
         TaskStatus status = TaskStatus.valueOf(taskLines[3]);
         String description = taskLines[4];
-        if (type.equals(TaskType.EPIC)) {
+        if (type == TaskType.EPIC) {
             return new Epic(id, TaskType.EPIC, name, status, description, new ArrayList<>());
         } else if (type == TaskType.SUBTASK) {
             int epic = Integer.parseInt(taskLines[5]);
@@ -154,9 +150,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 countOfId++;
             }
         } catch (FileNotFoundException exception) {
-            throw new LoadFromFileException("Файл " + file + " не найден. " + exception.getMessage());
+            throw new LoadFromFileException("Файл " + file.getName() + " не найден. " + exception.getMessage());
         } catch (IOException exception) {
-            throw new LoadFromFileException("Ошибка чтения файла." + exception.getMessage());
+            throw new LoadFromFileException("Ошибка чтения файла: " + file.getName() + "." + exception.getMessage());
         }
     }
 
