@@ -2,7 +2,6 @@ package modules;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Subtask extends Task {
 
@@ -13,7 +12,7 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
-    public Subtask (Integer id, TaskType type, String name, TaskStatus status, String description,
+    public Subtask(Integer id, TaskType type, String name, TaskStatus status, String description,
                 Integer epicId) {
         super(id, name, status, description);
         this.type = type;
