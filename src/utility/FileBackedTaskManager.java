@@ -7,6 +7,8 @@ import modules.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
@@ -96,7 +98,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public void saveTask() { //сохранение задачи в файл
         try (FileWriter writer = new FileWriter(file.toFile(),false)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,duration,startTime,epic,endTime\n");
             for (Integer key : tasks.keySet()) {
                 writer.write(tasks.get(key).toString() + "\n");
             }
@@ -118,13 +120,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = taskLines[2];
         TaskStatus status = TaskStatus.valueOf(taskLines[3]);
         String description = taskLines[4];
+        Duration duration = Duration.parse(taskLines[5]);
+        LocalDateTime startTime = LocalDateTime.parse(taskLines[6]);
         if (type == TaskType.EPIC) {
-            return new Epic(id, TaskType.EPIC, name, status, description, new ArrayList<>());
+            LocalDateTime endTime = LocalDateTime.parse(taskLines[7]);
+            return new Epic(id, TaskType.EPIC, name, status, description, new ArrayList<>(), duration, startTime,
+                    endTime);
         } else if (type == TaskType.SUBTASK) {
-            int epic = Integer.parseInt(taskLines[5]);
-            return new Subtask(id, TaskType.SUBTASK, name, status,description, epic);
+            int epic = Integer.parseInt(taskLines[7]);
+            return new Subtask(id, TaskType.SUBTASK, name, status,description, duration, startTime, epic);
         } else {
-            return new Task(id, type, name,  status, description);
+            return new Task(id, type, name,  status, description, duration, startTime);
         }
     }
 
@@ -137,9 +143,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     break;
                 }
                 Task task = getFromString(line);
-                if (task.getType().equals(TaskType.TASK)) {
+                if (task.getType() == TaskType.TASK) {
                     tasks.put(task.getId(), task);
-                } else if (task.getType().equals(TaskType.EPIC)) {
+                } else if (task.getType() == TaskType.EPIC) {
                     epics.put(task.getId(),(Epic) task);
                 } else {
                     Subtask subtask = (Subtask) task;
