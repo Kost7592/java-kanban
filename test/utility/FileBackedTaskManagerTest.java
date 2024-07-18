@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 
 import static java.util.Objects.isNull;
@@ -29,7 +32,7 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void checkThatToSaveAndDownloadAnEmptyFile() { // проверка сохранения и загрузки не заполненного файла
+    public void checkThatToSaveAndDownloadAnEmptyFile() { //проверка сохранения и загрузки не заполненного файла
         assertNotNull(tempFile);
         fileManager.saveTask();
         fileManager.loadFromFile(tempFile);
@@ -76,16 +79,24 @@ public class FileBackedTaskManagerTest {
     }
 
     private void createTasksManually() { //создание задач "вручную"
-        Task task1 = new Task(0, TaskType.TASK, "Task1", TaskStatus.NEW,"Task1 description");
-        Task task2 = new Task(1, TaskType.TASK, "Task2", TaskStatus.NEW,"Task2 description");
-        Epic epic1 = new Epic(2,TaskType.EPIC, "Epic1",TaskStatus.NEW,"Epic1 description",new ArrayList<>());
-        Subtask subtask1 = new Subtask(3, TaskType.SUBTASK,"Subtask1",TaskStatus.NEW,"Subtask1 description",2);
-        Subtask subtask2 = new Subtask(4,TaskType.SUBTASK,"Subtask2",TaskStatus.NEW,"Subtask2 description",2);
+        Task task1 = new Task(0, TaskType.TASK, "Task1", TaskStatus.NEW,"Task1 description",
+                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 10, 0 ));
+        Task task2 = new Task(1, TaskType.TASK, "Task2", TaskStatus.NEW,"Task2 description",
+                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 11, 0 ));
+        Epic epic1 = new Epic(2, TaskType.EPIC, "Epic1",TaskStatus.NEW,
+                "Epic1 description",new ArrayList<>());
+        Subtask subtask1 = new Subtask(3, TaskType.SUBTASK,"Subtask1",TaskStatus.NEW,
+                "Subtask1 description", Duration.ofMinutes(10),LocalDateTime.of(2024, Month.JULY,
+                17,12,0),2);
+        Subtask subtask2 = new Subtask(4, TaskType.SUBTASK,"Subtask2",TaskStatus.NEW,
+                "Subtask2 description", Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY,
+                17, 13, 0), 2);
         fileManager.createTask(task1);
         fileManager.createTask(task2);
         fileManager.createEpic(epic1);
         fileManager.createSubtask(subtask1);
         fileManager.createSubtask(subtask2);
+        fileManager.updateEpic(epic1);
     }
 
     private File copyFile(File tempFile) { //копирование файла
