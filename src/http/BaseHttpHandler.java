@@ -22,7 +22,7 @@ public class BaseHttpHandler implements HttpHandler {
         } else {
             byte[] bytes = responseText.getBytes(DEFAULT_CHARSET);
             exchange.sendResponseHeaders(responseCode, bytes.length);
-            try (OutputStream os =exchange.getResponseBody()) {
+            try (OutputStream os = exchange.getResponseBody()) {
                 os.write(bytes);
             }
         }
