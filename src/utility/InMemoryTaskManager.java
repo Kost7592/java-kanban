@@ -147,10 +147,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic createEpic(Epic newEpic) { //создание эпика
-        if(newEpic !=null) {
+        if (newEpic != null) {
             newEpic.setId(getNewId());
-        epics.put(newEpic.getId(),newEpic);
-        updateSortedTasks();
+            epics.put(newEpic.getId(),newEpic);
+            updateSortedTasks();
         }
         return newEpic;
     }
