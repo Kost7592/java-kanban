@@ -1,13 +1,24 @@
-import modules.Epic;
-import modules.Subtask;
-import modules.Task;
-import modules.TaskStatus;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import http.HttpTaskServer;
+import modules.*;
+import utility.DurationTypeAdapter;
 import utility.InMemoryTaskManager;
+import utility.LocalDateTimeTypeAdapter;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Task task1 = new Task("Задача 1", "Первая задача."); // заполнение задач
         taskManager.createTask(task1);
         Task task2 = new Task("Задача 2", "Вторая задача");
@@ -85,5 +96,4 @@ public class Main {
             System.out.println(task);
         }
     }
-
 }

@@ -114,7 +114,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private static Task getFromString(String taskString) { //получение задачи из строки текста
-        String[] taskLines = taskString.split(",");
+        String[] taskLines;
+        taskLines= taskString.split(",");
         Integer id = Integer.parseInt(taskLines[0]);
         TaskType type = TaskType.valueOf(taskLines[1]);
         String name = taskLines[2];

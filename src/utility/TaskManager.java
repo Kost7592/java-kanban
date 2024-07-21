@@ -51,4 +51,6 @@ public interface TaskManager {
     void updateEpic(Epic newEpic);
 
     TreeSet<Task> getPrioritizedTasks();
+
+    void clearSortedTasks();
 }
