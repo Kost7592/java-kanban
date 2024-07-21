@@ -37,7 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(Integer id) { //получение задачи по id
         Task task = tasks.get(id);
-        if(task != null) {
+        if (task != null) {
             historyManager.addView(tasks.get(id));
         }
         return task;
