@@ -4,7 +4,7 @@ import modules.Task;
 
 import java.util.*;
 
-public class InMemoryHistoryManager implements HistoryManager  {
+public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node> nodes = new HashMap<>();
     private Node head;
     private Node tail;
@@ -33,11 +33,11 @@ public class InMemoryHistoryManager implements HistoryManager  {
     @Override
     public List<Task> getHistory() {
         return getTasks();
-    } // получение списка истории
+    } //получение списка истории
 
     private void linkLast(Task task) { //добавление задачи в конец списка
         Node oldTail = tail;
-        Node newNode = new Node(oldTail,task,null);
+        Node newNode = new Node(oldTail, task, null);
         tail = newNode;
         if (oldTail == null) {
             head = newNode;

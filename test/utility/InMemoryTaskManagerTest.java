@@ -56,6 +56,7 @@ class InMemoryTaskManagerTest {
     public void checkThatTheSubTaskIsSavedInTheEpic() { //подзадача сохраняется в эпике
         assertNotNull(manager.getEpicSubtasks(epic1.getId()));
     }
+
     @Test
     public void checkTheImmutabilityOfTheTaskAfterItsCreation() { //проверка неизменности задачи после ее создания
         manager.createTask(task1);
@@ -105,13 +106,13 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void checkThatCheckingOfTaskTimeIsWork() { //проверка срабатывания исключения на пересечение времени у задач
-        task1 = new Task(1,TaskType.TASK, "Task1", TaskStatus.NEW,"Task1 descrption",
+        task1 = new Task(1, TaskType.TASK, "Task1", TaskStatus.NEW, "Task1 descrption",
                 Duration.ofMinutes(120), LocalDateTime.now());
         assertThrowsExactly(TaskVerifiedException.class, () -> {
             manager.createTask(task1);
         });
         assertThrowsExactly(TaskVerifiedException.class, () -> {
-           manager.updateTask(task1);
+            manager.updateTask(task1);
         });
     }
 
@@ -120,9 +121,9 @@ class InMemoryTaskManagerTest {
         Epic epic = new Epic(0, TaskType.EPIC, "Epic", TaskStatus.DONE, "Epic Description",
                 new ArrayList());
         manager.createEpic(epic);
-        Subtask subtask1 = new Subtask(1,TaskType.SUBTASK,"Subtask1", TaskStatus.NEW,
+        Subtask subtask1 = new Subtask(1, TaskType.SUBTASK, "Subtask1", TaskStatus.NEW,
                 "Subtask1 description", epic.getId());
-        Subtask subtask2 = new Subtask(2,TaskType.SUBTASK, "Subtask2", TaskStatus.NEW,
+        Subtask subtask2 = new Subtask(2, TaskType.SUBTASK, "Subtask2", TaskStatus.NEW,
                 "Subtask2 description", epic.getId());
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
@@ -134,7 +135,7 @@ class InMemoryTaskManagerTest {
         Epic epic = new Epic(0, TaskType.EPIC, "Epic", TaskStatus.DONE, "Epic Description",
                 new ArrayList());
         manager.createEpic(epic);
-        Subtask subtask1 = new Subtask(1,TaskType.SUBTASK,"Subtask1", TaskStatus.DONE,
+        Subtask subtask1 = new Subtask(1, TaskType.SUBTASK, "Subtask1", TaskStatus.DONE,
                 "Subtask1 description", epic.getId());
         Subtask subtask2 = new Subtask(2, TaskType.SUBTASK, "Subtask2", TaskStatus.DONE,
                 "Subtask2 description", epic.getId());
@@ -148,7 +149,7 @@ class InMemoryTaskManagerTest {
         Epic epic = new Epic(0, TaskType.EPIC, "Epic", TaskStatus.NEW, "Epic Description",
                 new ArrayList());
         manager.createEpic(epic);
-        Subtask subtask1 = new Subtask(1,TaskType.SUBTASK,"Subtask1", TaskStatus.DONE,
+        Subtask subtask1 = new Subtask(1, TaskType.SUBTASK, "Subtask1", TaskStatus.DONE,
                 "Subtask1 description", epic.getId());
         Subtask subtask2 = new Subtask(2, TaskType.SUBTASK, "Subtask2", TaskStatus.NEW,
                 "Subtask2 description", epic.getId());

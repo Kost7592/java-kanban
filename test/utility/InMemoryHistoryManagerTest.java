@@ -41,7 +41,7 @@ class InMemoryHistoryManagerTest {
         epic1.setName("b");
         manager.updateEpic(epic1);
         Assertions.assertNotEquals(manager.getHistory().get(0).getName(),
-                                   manager.getEpicById(epic1.getId()).getName());
+                manager.getEpicById(epic1.getId()).getName());
     }
 
     @Test
@@ -61,7 +61,7 @@ class InMemoryHistoryManagerTest {
         subtask.setName("b");
         manager.updateSubtask(subtask);
         Assertions.assertNotEquals(manager.getHistory().getLast().getName(),
-                                   manager.getSubtaskById(subtask.getId()).getName());
+                manager.getSubtaskById(subtask.getId()).getName());
     }
 
     @Test
@@ -71,6 +71,6 @@ class InMemoryHistoryManagerTest {
         task.setName("b");
         manager.updateTask(task);
         Assertions.assertNotEquals(manager.getHistory().getFirst().getName(),
-                                   manager.getTaskById(task.getId()).getName());
+                manager.getTaskById(task.getId()).getName());
     }
 }

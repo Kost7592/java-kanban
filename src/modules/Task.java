@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task implements Comparable {
-    protected String name;
-    protected String description;
-    protected TaskStatus status;
     protected Integer id;
     protected TaskType type;
-    protected LocalDateTime startTime;
+    protected String name;
+    protected TaskStatus status;
+    protected String description;
     protected Duration duration;
+    protected LocalDateTime startTime;
 
     public Task(String name, String description) {
         this.name = name;
@@ -36,6 +36,16 @@ public class Task implements Comparable {
         this.duration = duration;
         this.startTime = startTime;
 
+    }
+
+
+    public Task(String name, String description, int id, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public String getName() {
