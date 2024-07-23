@@ -12,29 +12,35 @@ import utility.TaskManager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
+/**
+ * Этот класс наследуется от класса BaseHttpHandler, который имплементирует интерфейс HttpHandler.
+ * Класс TaskHandler предназначен для работы с задачами и предоставляет методы для их создания, получения и удаления.
+ */
 public class TaskHandler extends BaseHttpHandler {
-    TaskManager taskManager;
-    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     private final Gson gson;
+    private final TaskManager taskManager;
     String response;
 
     public TaskHandler(TaskManager newTaskManager) {
         this.taskManager = newTaskManager;
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(Duration.class,new DurationTypeAdapter())
+                .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
                 .create();
     }
 
+    /**
+     * Основной метод обработки запроса.
+     * Вызывает соответствующие методы в зависимости от типа запроса (GET, POST DELETE).
+     * Так же, обрабатывает не определенный запрос.
+     */
     @Override
-    public void handle(HttpExchange exchange) throws IOException { //обработчик входящих запросов
+    public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String path = String.valueOf(exchange.getRequestURI());
 
@@ -54,7 +60,10 @@ public class TaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void getTask(HttpExchange exchange) throws IOException { //получение задачи
+    /**
+     * Метод получения задачи по идентификатору.
+     */
+    private void getTask(HttpExchange exchange) throws IOException {
         if (exchange.getRequestURI().getQuery() == null) {
             response = gson.toJson(taskManager.getTasks());
             writeResponse(exchange, response, 200);
@@ -76,7 +85,10 @@ public class TaskHandler extends BaseHttpHandler {
         writeResponse(exchange, response, 200);
     }
 
-    private void addTask(HttpExchange exchange) throws IOException { //добавление задачи
+    /**
+     * Метод добавления задачи.
+     */
+    private void addTask(HttpExchange exchange) throws IOException {
         try {
             InputStream json = exchange.getRequestBody();
             String jsonTask = new String(json.readAllBytes(), DEFAULT_CHARSET);
@@ -101,7 +113,10 @@ public class TaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void deleteTask(HttpExchange exchange) throws IOException { //удаление задачи
+    /**
+     * Метод удаления задачи.
+     */
+    private void deleteTask(HttpExchange exchange) throws IOException {
         String query = exchange.getRequestURI().getQuery();
 
         if (query == null) {

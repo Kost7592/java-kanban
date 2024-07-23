@@ -19,9 +19,13 @@ import java.util.List;
 
 import static java.util.Objects.isNull;
 
+/**
+ * Этот класс наследуется от класса BaseHttpHandler, который имплементирует интерфейс HttpHandler.
+ * Класс EpicHandler предназначен для работы с эпиками и предоставляет методы для их создания, получения и удаления.
+ */
 public class EpicHandler extends BaseHttpHandler {
-    TaskManager taskManager;
     private final Gson gson;
+    private final TaskManager taskManager;
     String response;
 
     public EpicHandler(TaskManager newTaskManager) {
@@ -32,8 +36,13 @@ public class EpicHandler extends BaseHttpHandler {
                 .create();
     }
 
+    /**
+     * Основной метод обработки запроса.
+     * Вызывает соответствующие методы в зависимости от типа запроса (GET, POST DELETE).
+     * Так же, обрабатывает не определенный запрос.
+     */
     @Override
-    public void handle(HttpExchange exchange) throws IOException { //обработчик входящих запросов
+    public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         switch (method) {
             case "GET":
@@ -50,7 +59,10 @@ public class EpicHandler extends BaseHttpHandler {
         }
     }
 
-    private void getEpic(HttpExchange exchange) throws IOException { //получение эпика
+    /**
+     * Метод получения эпика по идентификатору.
+     */
+    private void getEpic(HttpExchange exchange) throws IOException {
         if (exchange.getRequestURI().getQuery() == null) {
             response = gson.toJson(taskManager.getEpics());
             writeResponse(exchange, response, 200);
@@ -79,7 +91,10 @@ public class EpicHandler extends BaseHttpHandler {
         writeResponse(exchange, response, 200);
     }
 
-    private void addEpic(HttpExchange exchange) throws IOException { //добавление эпика
+    /**
+     * Метод добавления эпика.
+     */
+    private void addEpic(HttpExchange exchange) throws IOException {
         try {
             InputStream json = exchange.getRequestBody();
             String jsonTask = new String(json.readAllBytes(), StandardCharsets.UTF_8);
@@ -102,7 +117,10 @@ public class EpicHandler extends BaseHttpHandler {
         }
     }
 
-    private void deleteEpic(HttpExchange exchange) throws IOException { //удаление эпика
+    /**
+     * Метод удаления эпика.
+     */
+    private void deleteEpic(HttpExchange exchange) throws IOException {
         String query = exchange.getRequestURI().getQuery();
         if (query == null) {
             writeResponse(exchange, "Не указан id эпика!", 404);

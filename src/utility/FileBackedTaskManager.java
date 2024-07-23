@@ -97,7 +97,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public void saveTask() { //сохранение задачи в файл
-        try (FileWriter writer = new FileWriter(file.toFile(),false)) {
+        try (FileWriter writer = new FileWriter(file.toFile(), false)) {
             writer.write("id,type,name,status,description,duration,startTime,epic,endTime\n");
             for (Integer key : tasks.keySet()) {
                 writer.write(tasks.get(key).toString() + "\n");
@@ -129,9 +129,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     endTime);
         } else if (type == TaskType.SUBTASK) {
             int epic = Integer.parseInt(taskLines[7]);
-            return new Subtask(id, TaskType.SUBTASK, name, status,description, duration, startTime, epic);
+            return new Subtask(id, TaskType.SUBTASK, name, status, description, duration, startTime, epic);
         } else {
-            return new Task(id, type, name,  status, description, duration, startTime);
+            return new Task(id, type, name, status, description, duration, startTime);
         }
     }
 
@@ -147,10 +147,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (task.getType() == TaskType.TASK) {
                     tasks.put(task.getId(), task);
                 } else if (task.getType() == TaskType.EPIC) {
-                    epics.put(task.getId(),(Epic) task);
+                    epics.put(task.getId(), (Epic) task);
                 } else {
                     Subtask subtask = (Subtask) task;
-                    subtasks.put(task.getId(),subtask);
+                    subtasks.put(task.getId(), subtask);
                     Epic epic = epics.get(subtask.getEpicId());
                     epic.getSubtasksId().add(subtask.getId());
                 }

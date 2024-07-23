@@ -78,7 +78,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeEpicById(Integer id) { //удаление эпика по id
         Epic epic = getEpicById(id);
         if (epics.containsKey(id)) {
-            for (Integer subtaskId: epic.getSubtasksId()) {
+            for (Integer subtaskId : epic.getSubtasksId()) {
                 subtasks.remove(subtaskId);
                 historyManager.remove(subtaskId);
             }
@@ -102,7 +102,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void  removeAllEpics() { //удаление всех эпиков
+    public void removeAllEpics() { //удаление всех эпиков
         if (!(subtasks.isEmpty())) {
             removeAllSubtasks();
         }
@@ -127,7 +127,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeAllSubtasks() { //удаление всех подзадач
         subtasks.clear();
-        for (Epic epic: epics.values()) {
+        for (Epic epic : epics.values()) {
             epic.setSubtasksId(new ArrayList<>());
             updateEpicStatus(epic.getId());
         }
@@ -149,7 +149,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic createEpic(Epic newEpic) { //создание эпика
         if (newEpic != null) {
             newEpic.setId(getNewId());
-            epics.put(newEpic.getId(),newEpic);
+            epics.put(newEpic.getId(), newEpic);
             updateSortedTasks();
         }
         return newEpic;
@@ -231,23 +231,23 @@ public class InMemoryTaskManager implements TaskManager {
         LocalDateTime startTime = null;
         for (Subtask subtask : subtasks) {
             if (!(subtask.getStartTime() == null)) {
-            LocalDateTime currentStartTime = subtask.getStartTime();
-            if (startTime == null || currentStartTime.isBefore(startTime)) {
-                startTime = currentStartTime;
+                LocalDateTime currentStartTime = subtask.getStartTime();
+                if (startTime == null || currentStartTime.isBefore(startTime)) {
+                    startTime = currentStartTime;
+                }
             }
         }
-            }
         return startTime;
-     }
+    }
 
-     public LocalDateTime getEndTime(Epic epic) { //получение времени конца выполнения эпика
+    public LocalDateTime getEndTime(Epic epic) { //получение времени конца выполнения эпика
         Duration duration = epic.getDuration();
         LocalDateTime startTime = epic.getStartTime();
         if (startTime == null) {
             return null;
         }
-         return startTime.plus(duration);
-     }
+        return startTime.plus(duration);
+    }
 
     public Duration getDuration(Epic epic) { //получение продолжительности эпика
         List<Subtask> subtasks = getEpicSubtasks(epic.getId());
@@ -266,7 +266,7 @@ public class InMemoryTaskManager implements TaskManager {
         int countOfNew = 0;
         Epic epic = getEpicById(id);
         List<Subtask> epicSubtasks = getEpicSubtasks(id);
-        for (Subtask subtask: epicSubtasks) {
+        for (Subtask subtask : epicSubtasks) {
             if (subtask.getStatus() == TaskStatus.NEW) {
                 countOfNew++;
             } else if (subtask.getStatus() == TaskStatus.DONE) {

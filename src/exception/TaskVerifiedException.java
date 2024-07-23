@@ -18,7 +18,7 @@ public class TaskVerifiedException extends RuntimeException {
      * Создаёт новое исключение TaskVerifiedException с указанным сообщением и причиной.
      *
      * @param message сообщение об ошибке
-     * @param cause причина исключения
+     * @param cause   причина исключения
      */
     public TaskVerifiedException(String message, Throwable cause) {
         super(message, cause);

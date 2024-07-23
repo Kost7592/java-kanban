@@ -47,7 +47,7 @@ public class HttpTaskServerTest {
         task = new Task(0, TaskType.TASK, "TestTask", TaskStatus.NEW, "TestTask Description",
                 Duration.ofMinutes(10), LocalDateTime.parse(("18.07.24 10:00"),
                 DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")));
-        epic = new Epic(1,TaskType.EPIC, "TestEpic", TaskStatus.NEW, "TestEpic Description",
+        epic = new Epic(1, TaskType.EPIC, "TestEpic", TaskStatus.NEW, "TestEpic Description",
                 new ArrayList<>());
         subtask = new Subtask(2, TaskType.SUBTASK, "TestSubtask", TaskStatus.NEW,
                 "TestSubtask Description", Duration.ofMinutes(10), LocalDateTime.parse(("19.07.24 11:00"),

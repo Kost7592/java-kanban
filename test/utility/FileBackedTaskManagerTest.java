@@ -25,7 +25,7 @@ public class FileBackedTaskManagerTest {
     public void initialization() {
         try {
             tempFile = File.createTempFile("test", "csv");
-        } catch(IOException exception) {
+        } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
         fileManager = new FileBackedTaskManager(tempFile.toPath());
@@ -42,7 +42,7 @@ public class FileBackedTaskManagerTest {
     public void checkingForSavingTasks() { //проверка сохранения задач в файл
         createTasksManually();
         assertEquals(2, fileManager.getTasks().size());
-        assertEquals(1,fileManager.getEpics().size());
+        assertEquals(1, fileManager.getEpics().size());
         assertEquals(2, fileManager.getSubtasks().size());
         int count = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(tempFile.toString()))) {
@@ -74,21 +74,21 @@ public class FileBackedTaskManagerTest {
         assertEquals(0, fileManager.getSubtasks().size());
         fileManager.loadFromFile(copyFile);
         assertEquals(2, fileManager.getTasks().size());
-        assertEquals(1,fileManager.getEpics().size());
+        assertEquals(1, fileManager.getEpics().size());
         assertEquals(2, fileManager.getSubtasks().size());
     }
 
     private void createTasksManually() { //создание задач "вручную"
-        Task task1 = new Task(0, TaskType.TASK, "Task1", TaskStatus.NEW,"Task1 description",
-                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 10, 0 ));
-        Task task2 = new Task(1, TaskType.TASK, "Task2", TaskStatus.NEW,"Task2 description",
-                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 11, 0 ));
-        Epic epic1 = new Epic(2, TaskType.EPIC, "Epic1",TaskStatus.NEW,
-                "Epic1 description",new ArrayList<>());
-        Subtask subtask1 = new Subtask(3, TaskType.SUBTASK,"Subtask1",TaskStatus.NEW,
-                "Subtask1 description", Duration.ofMinutes(10),LocalDateTime.of(2024, Month.JULY,
-                17,12,0),2);
-        Subtask subtask2 = new Subtask(4, TaskType.SUBTASK,"Subtask2",TaskStatus.NEW,
+        Task task1 = new Task(0, TaskType.TASK, "Task1", TaskStatus.NEW, "Task1 description",
+                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 10, 0));
+        Task task2 = new Task(1, TaskType.TASK, "Task2", TaskStatus.NEW, "Task2 description",
+                Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY, 17, 11, 0));
+        Epic epic1 = new Epic(2, TaskType.EPIC, "Epic1", TaskStatus.NEW,
+                "Epic1 description", new ArrayList<>());
+        Subtask subtask1 = new Subtask(3, TaskType.SUBTASK, "Subtask1", TaskStatus.NEW,
+                "Subtask1 description", Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY,
+                17, 12, 0), 2);
+        Subtask subtask2 = new Subtask(4, TaskType.SUBTASK, "Subtask2", TaskStatus.NEW,
                 "Subtask2 description", Duration.ofMinutes(10), LocalDateTime.of(2024, Month.JULY,
                 17, 13, 0), 2);
         fileManager.createTask(task1);
@@ -102,7 +102,7 @@ public class FileBackedTaskManagerTest {
     private File copyFile(File tempFile) { //копирование файла
         File copyFile;
         try {
-            copyFile = File.createTempFile("file2","csv");
+            copyFile = File.createTempFile("file2", "csv");
             Files.copy(tempFile.toPath(), copyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException exception) {
             throw new RuntimeException(exception);

@@ -12,29 +12,33 @@ import utility.TaskManager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
+/**Этот класс наследуется от класса BaseHttpHandler, который имплементирует интерфейс HttpHandler.
+ * Класс SubtaskHandler предназначен для работы с подзадачами и предоставляет методы для их создания,
+ * получения и удаления.*/
 public class SubtaskHandler extends BaseHttpHandler {
-    TaskManager taskManager;
-    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     private final Gson gson;
+    private final TaskManager taskManager;
     String response;
 
     public SubtaskHandler(TaskManager newTaskManager) {
         this.taskManager = newTaskManager;
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(Duration.class,new DurationTypeAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-                .create();
+                .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter()).create();
     }
 
+    /**
+     * Основной метод обработки запроса.
+     * Вызывает соответствующие методы в зависимости от типа запроса (GET, POST DELETE).
+     * Так же, обрабатывает не определенный запрос.
+     */
     @Override
-    public void handle(HttpExchange exchange) throws IOException { //обработчик входящих запросов
+    public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         switch (method) {
             case "GET":
@@ -51,7 +55,10 @@ public class SubtaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void getSubTask(HttpExchange exchange) throws IOException { //получение задачи
+    /**
+     * Метод получения подзадачи по идентификатору.
+     */
+    private void getSubTask(HttpExchange exchange) throws IOException {
         if (exchange.getRequestURI().getQuery() == null) {
             response = gson.toJson(taskManager.getSubtasks());
             writeResponse(exchange, response, 200);
@@ -71,7 +78,10 @@ public class SubtaskHandler extends BaseHttpHandler {
         writeResponse(exchange, response, 200);
     }
 
-    private void addSubTask(HttpExchange exchange) throws IOException { //добавление задачи
+    /**
+     * Метод добавления подзадачи.
+     */
+    private void addSubTask(HttpExchange exchange) throws IOException {
         try {
             InputStream json = exchange.getRequestBody();
             String jsonTask = new String(json.readAllBytes(), DEFAULT_CHARSET);
@@ -96,7 +106,10 @@ public class SubtaskHandler extends BaseHttpHandler {
         }
     }
 
-    private void deleteSubTask(HttpExchange exchange) throws IOException { //удаление подзадачи
+    /**
+     * Метод удаления подзадачи.
+     */
+    private void deleteSubTask(HttpExchange exchange) throws IOException {
         if (exchange.getRequestURI().getQuery() == null) {
             writeResponse(exchange, "Не указан id подзадачи!", 404);
             return;
@@ -111,7 +124,7 @@ public class SubtaskHandler extends BaseHttpHandler {
             return;
         }
         taskManager.removeSubtaskById(id);
-        writeResponse(exchange, "Подзадача удалена!",200);
+        writeResponse(exchange, "Подзадача удалена!", 200);
     }
 }
 
